@@ -69,22 +69,11 @@ public class RestAPIController {
 	//byName
 	@SuppressWarnings("null")
 	@RequestMapping(value="/name/{name}", method = RequestMethod.GET)
-	public ResponseEntity<List<Object>> getPlanetsByName(@PathVariable ("name") String name) {
-		
-		List<Planets> lstPlanets = planetsRepository.findAll();
+	public ResponseEntity<Planets> getPlanetsByName(@PathVariable ("name") String name) {
 
-		for (Planets p:lstPlanets)
-		{
-			if(p.getName().equals(name)) {
-				List<Object> lstFind = null;
-				lstFind.add(p);
-				return new ResponseEntity<>(lstFind, HttpStatus.OK);
-			}		
 		
-		}
-	
-		List<Object> lstNull = null;
-		return new ResponseEntity<>(lstNull, HttpStatus.NOT_FOUND);
+		Planets planets = planetsRepository.findCustomByName(name);
+		return new ResponseEntity<>(planets, HttpStatus.OK);
 		
 	}
 
